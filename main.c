@@ -1,8 +1,27 @@
-#include <time.h>
-#include <stdio.h>
+#define _ISOC11_SOURCE  
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
 #define ARRAY_SIZE 64 * 8
+
+// Nowa idea na manahattan_distance_transform
+
+// by bardziej zoptymalizować zużycie cache, możemy zrobić tak, że zamiast
+// iść do końca tablicy od dołu, w sensie lewy dół, do prawy dół, to
+// dzielimy tablicę na bloki.
+// idziemy od prawego dolnego do przedostatniego elementu z bloku, bo jeszcze z 
+// niego accesujemy pamięć, i następnie przechodzimy na początek lewej od dołu
+// o jeden wyżej, czyli dalej aktualny cache line
+// efektywnie przetrzymujemy dwa cache liny, które co przejście po bloku
+// zmieniamy o jeden w górę, efektywnie wczytując tylko jeden cache line
+// dodatkowo, zamiast dwa jak co przejście po tablicy normalnie bez bloków
+// bloki iterujemy tak samo jak normalnie manhattan distance, czyli lewy-dół,
+// potem prawy dół, lewy góra i prawy góra
+
+// pytanie tylko czy to działa, bo ma to sens przy założeniu, że można mieć dwie 
+// linie cache załadowane w danej chwili
+
 
 void manhattan_distance_transform(const char *inArr, int *outArr, int arrSize) {
     int total = arrSize * arrSize;
@@ -260,8 +279,20 @@ int main(void){
     double sum_skurwialy = 0;
     
     for(int i = 0; i < 10; i++){
-        char *arr2d = malloc(ARRAY_SIZE * ARRAY_SIZE * sizeof(char));
-        int *out2d = malloc(ARRAY_SIZE * ARRAY_SIZE * sizeof(int));
+        size_t size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * sizeof(char);
+        char *arr2d = aligned_alloc(64, size_in_bytes);
+        if (!arr2d) {
+            perror("aligned_alloc failed for arr2d");
+            return 1;
+        }
+
+        size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * sizeof(int);
+        int *out2d =  aligned_alloc(64, size_in_bytes);
+        if (!out2d) {
+            perror("aligned_alloc failed for out2d");
+            free(arr2d);
+            return 1;
+        }
         // int *out2d = calloc(ARRAY_SIZE * ARRAY_SIZE,sizeof(int));
 
         for(int i = 0; i < ARRAY_SIZE * ARRAY_SIZE; i++){
