@@ -23,6 +23,15 @@
 // linie cache załadowane w danej chwili
 
 
+
+// Inny pomysł
+
+// Jest możliwość wykorzystania SIMD funkcji min dla czterech wartości
+// Można by porównywać 3 i jedną dummy wartość, albo rozważyć inny algorytm??
+// niewykluczone, że jeśli by patrzeć jescze dalej to nie zrobiłoby to nawet
+// różnicy
+
+
 void manhattan_distance_transform(const char *inArr, int *outArr, int arrSize) {
     int total = arrSize * arrSize;
     // Ustawiamy wartość nieskończoności – tutaj maksymalna odległość
@@ -279,14 +288,14 @@ int main(void){
     double sum_skurwialy = 0;
     
     for(int i = 0; i < 10; i++){
-        size_t size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * sizeof(char);
+        size_t size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * ARRAY_SIZE * sizeof(char);
         char *arr2d = aligned_alloc(64, size_in_bytes);
         if (!arr2d) {
             perror("aligned_alloc failed for arr2d");
             return 1;
         }
 
-        size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * sizeof(int);
+        size_in_bytes = ARRAY_SIZE * ARRAY_SIZE * ARRAY_SIZE * sizeof(int);
         int *out2d =  aligned_alloc(64, size_in_bytes);
         if (!out2d) {
             perror("aligned_alloc failed for out2d");
@@ -295,14 +304,14 @@ int main(void){
         }
         // int *out2d = calloc(ARRAY_SIZE * ARRAY_SIZE,sizeof(int));
 
-        for(int i = 0; i < ARRAY_SIZE * ARRAY_SIZE; i++){
+        for(int i = 0; i < ARRAY_SIZE * ARRAY_SIZE * ARRAY_SIZE; i++){
             arr2d[i] = 'a';
             out2d[i] = 0;
         }
         arr2d[12] = 'A';
 
         clock_t begin = clock();
-        skurwialy_distance_transform(arr2d, out2d, ARRAY_SIZE);
+        skurwialy_distance_transform(arr2d, out2d, ARRAY_SIZE * 8);
         clock_t end = clock();
         sum_skurwialy += (double)(end - begin) / CLOCKS_PER_SEC;
 
@@ -311,18 +320,18 @@ int main(void){
     }
 
     for(int i = 0; i < 10; i++){
-        char *arr2d = malloc(ARRAY_SIZE * ARRAY_SIZE * sizeof(char));
-        int *out2d = malloc(ARRAY_SIZE * ARRAY_SIZE * sizeof(int));
+        char *arr2d = malloc(ARRAY_SIZE * ARRAY_SIZE *ARRAY_SIZE * sizeof(char));
+        int *out2d = malloc(ARRAY_SIZE * ARRAY_SIZE *ARRAY_SIZE * sizeof(int));
         // int *out2d = calloc(ARRAY_SIZE * ARRAY_SIZE,sizeof(int));
 
-        for(int i = 0; i < ARRAY_SIZE * ARRAY_SIZE; i++){
+        for(int i = 0; i < ARRAY_SIZE * ARRAY_SIZE *ARRAY_SIZE; i++){
             arr2d[i] = 'a';
             out2d[i] = 0;
         }
         arr2d[12] = 'A';
 
         clock_t begin = clock();
-        manhattan_distance_transform(arr2d, out2d, ARRAY_SIZE);
+        manhattan_distance_transform(arr2d, out2d, ARRAY_SIZE * 8);
         clock_t end = clock();
         sum_mannhattan += (double)(end - begin) / CLOCKS_PER_SEC;
 
