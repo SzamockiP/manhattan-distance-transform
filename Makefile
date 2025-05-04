@@ -29,7 +29,9 @@ help:
 dirs:
 	@mkdir -p $(BIN_DIR)
 
-all: dirs $(IMPLS)
+all: dirs\
+	 IMPL_2PASS\
+	 IMPL_4PASS
 
 IMPL_2PASS: dirs\
 			$(SRC_DIR)/main.c\
