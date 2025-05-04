@@ -33,7 +33,7 @@ void manhattan_distance_transform(int* input_array, int* output_array){
     for(i = 1; i < ARRAY_SIZE; i++) {
         for(j = 0; j < ARRAY_SIZE; j++) {
             idx = i * ARRAY_SIZE + j;
-            int top_idx = (i - 1) * ARRAY_SIZE + j;
+            int top_idx = idx - ARRAY_SIZE;
             if(output_array[top_idx] + 1 < output_array[idx])
                 output_array[idx] = output_array[top_idx] + 1;
         }
@@ -43,7 +43,7 @@ void manhattan_distance_transform(int* input_array, int* output_array){
     for(i = 0; i < ARRAY_SIZE; i++) {
         for(j = 1; j < ARRAY_SIZE; j++) {
             idx = i * ARRAY_SIZE + j;
-            int left_idx = i * ARRAY_SIZE + (j - 1);
+            int left_idx = idx - 1;
             if(output_array[left_idx] + 1 < output_array[idx])
                 output_array[idx] = output_array[left_idx] + 1;
         }
@@ -53,7 +53,7 @@ void manhattan_distance_transform(int* input_array, int* output_array){
     for(i = ARRAY_SIZE - 2; i >= 0; i--) {
         for(j = 0; j < ARRAY_SIZE; j++) {
             idx = i * ARRAY_SIZE + j;
-            int bottom_idx = (i + 1) * ARRAY_SIZE + j;
+            int bottom_idx = idx + ARRAY_SIZE;
             if(output_array[bottom_idx] + 1 < output_array[idx])
                 output_array[idx] = output_array[bottom_idx] + 1;
         }
@@ -63,7 +63,7 @@ void manhattan_distance_transform(int* input_array, int* output_array){
     for(i = 0; i < ARRAY_SIZE; i++) {
         for(j = ARRAY_SIZE - 2; j >= 0; j--) {
             idx = i * ARRAY_SIZE + j;
-            int right_idx = i * ARRAY_SIZE + (j + 1);
+            int right_idx = idx + 1;
             if(output_array[right_idx] + 1 < output_array[idx])
                 output_array[idx] = output_array[right_idx] + 1;
         }
