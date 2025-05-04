@@ -4,19 +4,20 @@
 // 2 pass algorithm
 void manhattan_distance_transform(int* input_array, int* output_array){
     // Forward pass
+    int i, j, idx;
 
     const int INF = ARRAY_SIZE * ARRAY_SIZE;
 
     // Output array initialization
-    for (int i = 0; i < ARRAY_SIZE * ARRAY_SIZE; i++) {
+    for (i = 0; i < ARRAY_SIZE * ARRAY_SIZE; i++) {
         output_array[i] = INF;
     }
 
     // Forward pass
-    for(int i = 0; i < ARRAY_SIZE; i++){
+    for(i = 0; i < ARRAY_SIZE; i++){
         int row_offset = i * ARRAY_SIZE;
-        for(int j = 0; j < ARRAY_SIZE; j++){
-            int idx = row_offset + j;
+        for(j = 0; j < ARRAY_SIZE; j++){
+            idx = row_offset + j;
 
             if (i > 0) {
                 int top_idx = idx - ARRAY_SIZE;
@@ -46,10 +47,10 @@ void manhattan_distance_transform(int* input_array, int* output_array){
         }
     }
 
-    for(int i = ARRAY_SIZE - 1; i >= 0; i--){
+    for(i = ARRAY_SIZE - 1; i >= 0; i--){
         int row_offset = i * ARRAY_SIZE;
-        for(int j = ARRAY_SIZE - 1; j >= 0; j--){
-            int idx = row_offset + j;
+        for(j = ARRAY_SIZE - 1; j >= 0; j--){
+            idx = row_offset + j;
 
             if (i < ARRAY_SIZE - 1) {
                 int bottom_idx = idx + ARRAY_SIZE;

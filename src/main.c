@@ -19,20 +19,20 @@ int main() {
 
     manhattan_distance_transform(value_array, dt_array);
 
-    for(int i = 0; i < ARRAY_SIZE; i++){
-        int row = i * ARRAY_SIZE;
+    // for(int i = 0; i < ARRAY_SIZE; i++){
+    //     int row = i * ARRAY_SIZE;
 
-        for(int j = 0; j < ARRAY_SIZE; j++){
-            printf("%d ",value_array[row + j]);
-        }
+    //     for(int j = 0; j < ARRAY_SIZE; j++){
+    //         printf("%d ",value_array[row + j]);
+    //     }
 
-        printf("   ");
+    //     printf("   ");
 
-        for(int j = 0; j < ARRAY_SIZE; j++){
-            printf("%d ",dt_array[row + j]);
-        }
-        printf("\n");
-    }
+    //     for(int j = 0; j < ARRAY_SIZE; j++){
+    //         printf("%d ",dt_array[row + j]);
+    //     }
+    //     printf("\n");
+    // }
 
 
 
