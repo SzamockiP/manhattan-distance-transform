@@ -9,12 +9,13 @@ int main() {
 
     // Input array initialization
     // int* value_array = malloc(array_size * sizeof(int));
-    int* value_array = aligned_alloc(sizeof(int), array_size * sizeof(int));
+    int* value_array = aligned_alloc(64, array_size * sizeof(int));
 
+    value_array[3*ARRAY_SIZE + 3] = 1;
 
     // Output array initialization
     // int* dt_array = malloc(array_size * sizeof(int));
-    int* dt_array = aligned_alloc(sizeof(int), array_size * sizeof(int));
+    int* dt_array = aligned_alloc(64, array_size * sizeof(int));
 
     manhattan_distance_transform(value_array, dt_array);
 
