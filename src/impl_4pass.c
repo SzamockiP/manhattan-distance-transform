@@ -3,7 +3,7 @@
 
 void manhattan_distance_transform(int* input_array, int* output_array){
 
-    int i, j, idx;
+    int i, j, idx, row_idx, neighbour_idx;
 
     const int INF = ARRAY_SIZE * ARRAY_SIZE;
 
@@ -31,41 +31,45 @@ void manhattan_distance_transform(int* input_array, int* output_array){
 
     // Iteration 2: Top to bottom
     for(i = 1; i < ARRAY_SIZE; i++) {
+        row_idx = i * ARRAY_SIZE;
         for(j = 0; j < ARRAY_SIZE; j++) {
-            idx = i * ARRAY_SIZE + j;
-            int top_idx = idx - ARRAY_SIZE;
-            if(output_array[top_idx] + 1 < output_array[idx])
-                output_array[idx] = output_array[top_idx] + 1;
+            idx = row_idx + j;
+            neighbour_idx = idx - ARRAY_SIZE;
+            if(output_array[neighbour_idx] + 1 < output_array[idx])
+                output_array[idx] = output_array[neighbour_idx] + 1;
         }
     }
 
     // Iteration 3: Left to right
     for(i = 0; i < ARRAY_SIZE; i++) {
+        row_idx = i * ARRAY_SIZE;
         for(j = 1; j < ARRAY_SIZE; j++) {
-            idx = i * ARRAY_SIZE + j;
-            int left_idx = idx - 1;
-            if(output_array[left_idx] + 1 < output_array[idx])
-                output_array[idx] = output_array[left_idx] + 1;
+            idx = row_idx + j;
+            neighbour_idx = idx - 1;
+            if(output_array[neighbour_idx] + 1 < output_array[idx])
+                output_array[idx] = output_array[neighbour_idx] + 1;
         }
     }
 
     // Iteration 4: Bottom to top
     for(i = ARRAY_SIZE - 2; i >= 0; i--) {
+        row_idx = i * ARRAY_SIZE;
         for(j = 0; j < ARRAY_SIZE; j++) {
-            idx = i * ARRAY_SIZE + j;
-            int bottom_idx = idx + ARRAY_SIZE;
-            if(output_array[bottom_idx] + 1 < output_array[idx])
-                output_array[idx] = output_array[bottom_idx] + 1;
+            idx = row_idx + j;
+            neighbour_idx = idx + ARRAY_SIZE;
+            if(output_array[neighbour_idx] + 1 < output_array[idx])
+                output_array[idx] = output_array[neighbour_idx] + 1;
         }
     }
 
     // Iteration 5: Right to left
     for(i = 0; i < ARRAY_SIZE; i++) {
+        row_idx = i * ARRAY_SIZE;
         for(j = ARRAY_SIZE - 2; j >= 0; j--) {
-            idx = i * ARRAY_SIZE + j;
-            int right_idx = idx + 1;
-            if(output_array[right_idx] + 1 < output_array[idx])
-                output_array[idx] = output_array[right_idx] + 1;
+            idx = row_idx + j;
+            neighbour_idx = idx + 1;
+            if(output_array[neighbour_idx] + 1 < output_array[idx])
+                output_array[idx] = output_array[neighbour_idx] + 1;
         }
     }
 }
